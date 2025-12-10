@@ -37,6 +37,7 @@ include(GNUInstallDirs)
 #######################
 
 option(BUILD_GSTREAMER_PLUGIN "enable gstreamer plugin" ON)
+option(BUILD_ROS_INTERFACE "Enable building ROS dependent plugins" ON)
 option(BUILD_ROS2_PLUGINS "Enable building ROS2 dependent plugins" OFF)
 option(GENERATE_ROS_MODELS "Generate model sdf for ROS environment" OFF)
 
@@ -102,6 +103,14 @@ link_directories(${GAZEBO_LIBRARY_DIRS})
 
 add_subdirectory( external/OpticalFlow OpticalFlow )
 set( OpticalFlow_LIBS "OpticalFlow" )
+
+# for ROS subscribers and publishers
+if (BUILD_ROS_INTERFACE)
+  find_package(geometry_msgs REQUIRED)
+  find_package(roscpp REQUIRED)
+  find_package(sensor_msgs REQUIRED)
+  find_package(std_msgs REQUIRED)
+endif()
 
 # for ROS2 subscribers and publishers
 if (BUILD_ROS2_PLUGINS)
@@ -417,6 +426,28 @@ foreach(plugin ${plugins})
 endforeach()
 target_link_libraries(gazebo_opticalflow_plugin ${OpticalFlow_LIBS})
 
+# If BUILD_ROS_INTERFACE set to ON, build plugins that have ROS dependencies
+# Current plugins that can be used with ROS interface: gazebo_motor_failure_plugin
+if (BUILD_ROS_INTERFACE)
+  add_library(position_controller SHARED src/position_controller.cc)
+  target_link_libraries(position_controller ${GAZEBO_libraries} ${roscpp_LIBRARIES})
+  list(APPEND plugins position_controller)
+  message(STATUS "adding position_controller to build")
+  include_directories(
+    include
+    ${roscpp_INCLUDE_DIRS}
+    ${std_msgs_INCLUDE_DIRS}
+    ${geometry_msgs_INCLUDE_DIRS}
+    ${sensor_msgs_INCLUDE_DIRS}
+  )
+
+  target_link_libraries(position_controller
+    ${catkin_LIBRARIES}
+    ${roscpp_LIBRARIES}
+    ${GAZEBO_libraries}
+  )
+endif()
+
 # If BUILD_ROS2_PLUGINS set to ON, build plugins that have ROS dependencies
 # Current plugins that can be used with ROS interface: gazebo_motor_failure_plugin
 if (BUILD_ROS2_PLUGINS)
@@ -482,7 +513,7 @@ set(plugins
 
   add_library(ForceVisual SHARED src/force_visual/force_visual.cpp)
   list(APPEND plugins ForceVisual)
-  
+
   add_library(AdvancedLiftDragPlugin SHARED src/liftdrag_plugin/advanced_liftdrag_plugin.cpp)
   list(APPEND plugins LiftDragPlugin)
 #endif()

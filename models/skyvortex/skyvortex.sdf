@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 <sdf version='1.7'>
   <model name='skyvortex'>
-    <pose>0 0 0.2 0 0 0</pose>
+    <!-- <pose>0 0 0.2 0 0 0</pose> -->
+    <pose>-2.0 1.5 0.0 0 0 0</pose>
     <link name='base_link'>
       <pose>0 0 0 0 0 0</pose>
       <inertial>
         <!-- <pose>-0.000689 -0.002137 0.004638 0 -0 0</pose> -->
+        <!-- <pose>0 -0.002137 0.004638 0 -0 0</pose> -->
         <pose>0 -0.002137 0.004638 0 -0 0</pose>
         <!-- <mass>7.608516</mass> -->
         <mass>4.1077</mass>
@@ -19,7 +21,7 @@
         </inertia>
 
       </inertial>
-      <collision name='base_link_collision'>
+      <!-- <collision name='base_link_collision'>
         <pose>0 0 0.0 0 -0 0</pose>
         <geometry>
           <box>
@@ -37,7 +39,7 @@
             <ode/>
           </friction>
         </surface>
-      </collision>
+      </collision> -->
 
       <collision name='collision_youqian'>
         <pose relative_to='base_link'>0.030677 -0.25355 -0.17398 -0.174536578 -0.354013558 -0.4451657307</pose>
@@ -161,7 +163,7 @@
     </link>
 
 
-    <joint name='operator_1_joint' type='fixed'>
+    <joint name='operator_1_joint' type='revolute'>
       <pose relative_to='base_link'>0.000871 0.000172 0.028455 0 -0 0</pose>
       <parent>base_link</parent>
       <child>operator_1_Link</child>
@@ -188,7 +190,7 @@
       <pose relative_to='operator_1_joint'>0 0 0 0 -0 0</pose>
       <inertial>
         <pose>-0.039322 0.00272 -0.023277 0 -0 0</pose>
-        <mass>0.1</mass>
+        <mass>0.01</mass>
 
         <!-- <inertia>
           <ixx>0.02928</ixx>
@@ -200,7 +202,7 @@
         </inertia> -->
 
       </inertial>
-      <collision name='operator_1_collision_base'>
+      <!-- <collision name='operator_1_collision_base'>
         <pose>0 0 -0.02 0 -0 0</pose>
         <geometry>
           <box>
@@ -216,7 +218,7 @@
             <length>1</length>
           </cylinder>
         </geometry>
-      </collision>
+      </collision> -->
       <visual name='operator_1_visual'>
         <pose>0 0 0 0 -0 0</pose>
         <geometry>
@@ -237,7 +239,282 @@
       <self_collide>0</self_collide>
     </link>
 
-    <joint name='force_sensor_joint' type='fixed'>
+    <!-- model of end_effector -->
+
+    <joint name='connect_joint' type='prismatic'>
+      <pose relative_to='operator_1_Link'>0.515159 -0.008754 0.29747 2.0944 -0 -1.58779</pose>
+      <parent>operator_1_Link</parent>
+      <child>connect_Link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-0.6</lower>
+          <upper>0</upper>
+          <effort>0</effort>
+          <velocity>0</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <!-- <spring_stiffness>64</spring_stiffness> -->
+          <spring_stiffness>300</spring_stiffness>
+        </dynamics>
+      </axis>
+      <sensor name="force_torque" type="force_torque">
+        <update_rate>30</update_rate>
+        <visualize>1</visualize>
+      </sensor>
+    </joint>
+
+    <link name='connect_Link'>
+      <pose relative_to='connect_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.00023 -0.008308 -0.339949 0 -0 0</pose>
+        <!-- <mass>0.324535</mass> -->
+        <mass>0.01535</mass>
+        <!-- <mass>0.0004535</mass> -->
+        <inertia>
+          <ixx>0.00261433</ixx>
+          <ixy>-4.53611e-07</ixy>
+          <ixz>-9.17011e-06</ixz>
+          <iyy>0.00255743</iyy>
+          <iyz>-9.3336e-05</iyz>
+          <izz>0.000227535</izz>
+        </inertia>
+      </inertial>
+      <!-- <collision name='connect_Link_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://end_effector/meshes/connect_Link.STL</uri>
+          </mesh>
+        </geometry>
+      </collision> -->
+      <!-- <collision name='connect_Link_fixed_joint_lump__move_base_Link_collision_1'>
+        <pose>0 0 -0.4115 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://end_effector/meshes/move_base_Link.STL</uri>
+          </mesh>
+        </geometry>
+      </collision> -->
+      <collision name='connect_Link_fixed_joint_lump__move_base_Link_collision_0'>
+        <pose>0 0 -0.4115 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://end_effector/meshes/move_base_camera_coll000.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='connect_Link_fixed_joint_lump__move_base_Link_collision_1'>
+        <pose>0 0 -0.4115 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://end_effector/meshes/move_base_camera_coll001.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='connect_Link_fixed_joint_lump__move_base_Link_collision_2'>
+        <pose>0 0 -0.4115 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://end_effector/meshes/move_base_chassis_coll.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='connect_Link_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://end_effector/meshes/connect_Link.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='connect_Link_fixed_joint_lump__move_base_Link_visual_1'>
+        <pose>0 0 -0.4115 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://end_effector/meshes/move_base_Link.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='wheel1_joint' type='revolute'>
+      <pose relative_to='connect_Link'>0 0.085482 -0.4 0 -0 0</pose>
+      <parent>connect_Link</parent>
+      <child>wheel1_Link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='wheel1_Link'>
+      <pose relative_to='wheel1_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>-1e-06 -0.002478 -4.3e-05 0 -0 0</pose>
+        <mass>0.041284</mass>
+        <!-- <mass>0.00041284</mass> -->
+        <inertia>
+          <ixx>2.4836e-06</ixx>
+          <ixy>1.6072e-10</ixy>
+          <ixz>-1.849e-10</ixz>
+          <iyy>4.093e-06</iyy>
+          <iyz>-1.5731e-10</iyz>
+          <izz>2.4836e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name='wheel1_Link_collision'>
+        <pose>0 0 0 1.5708 -0 0</pose>
+        <!-- <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://end_effector/meshes/wheel1_Link.STL</uri>
+          </mesh>
+        </geometry> -->
+        <geometry>
+          <cylinder>
+            <length>0.02</length>
+            <radius>0.03</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='wheel1_Link_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://end_effector/meshes/wheel1_Link.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='wheel2_joint' type='revolute'>
+      <pose relative_to='connect_Link'>0.07403 -0.042741 -0.4 0 0 -2.0944</pose>
+      <parent>connect_Link</parent>
+      <child>wheel2_Link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='wheel2_Link'>
+      <pose relative_to='wheel2_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>-1e-06 -0.002344 2e-06 0 -0 0</pose>
+        <mass>0.040979</mass>
+        <!-- <mass>0.00041284</mass> -->
+        <inertia>
+          <ixx>2.4817e-06</ixx>
+          <ixy>1.6072e-10</ixy>
+          <ixz>-1.8492e-10</ixz>
+          <iyy>4.0926e-06</iyy>
+          <iyz>-1.5732e-10</iyz>
+          <izz>2.4817e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name='wheel2_Link_collision'>
+        <pose>0 0 0 1.5708 -0 0</pose>
+        <!-- <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://end_effector/meshes/wheel2_Link.STL</uri>
+          </mesh>
+        </geometry> -->
+        <geometry>
+          <cylinder>
+            <length>0.02</length>
+            <radius>0.03</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='wheel2_Link_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://end_effector/meshes/wheel2_Link.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='wheel3_joint' type='revolute'>
+      <pose relative_to='connect_Link'>-0.07403 -0.042741 -0.4 0 -0 2.0944</pose>
+      <parent>connect_Link</parent>
+      <child>wheel3_Link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='wheel3_Link'>
+      <pose relative_to='wheel3_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>-1e-06 -0.002344 2e-06 0 -0 0</pose>
+        <mass>0.040979</mass>
+        <!-- <mass>0.00041284</mass> -->
+        <inertia>
+          <ixx>2.4817e-06</ixx>
+          <ixy>1.6071e-10</ixy>
+          <ixz>-1.8491e-10</ixz>
+          <iyy>4.0926e-06</iyy>
+          <iyz>-1.5732e-10</iyz>
+          <izz>2.4817e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name='wheel3_Link_collision'>
+        <pose>0 0 0 1.5708 -0 0</pose>
+        <!-- <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://end_effector/meshes/wheel3_Link.STL</uri>
+          </mesh>
+        </geometry> -->
+        <geometry>
+          <cylinder>
+            <length>0.02</length>
+            <radius>0.03</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='wheel3_Link_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://end_effector/meshes/wheel3_Link.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+
+    <!-- <joint name='force_sensor_joint' type='fixed'>
       <pose relative_to='operator_1_Link'>0.832 -0.013 0.482 0 1.05 0</pose>
       <child>force_sensor</child>
       <parent>operator_1_Link</parent>
@@ -259,9 +536,9 @@
         <update_rate>30</update_rate>
         <visualize>1</visualize>
       </sensor>
-    </joint>
+    </joint> -->
 
-    <link name='force_sensor'>
+    <!-- <link name='force_sensor'>
       <pose relative_to='force_sensor_joint'>0 0 0 0 -0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
@@ -282,20 +559,19 @@
             <size>0.03 0.03 0.001</size>
           </box>
         </geometry>
-      </collision>
-      <visual name='force_sensor_visual'>
+      </collision> -->
+      <!-- <visual name='force_sensor_visual'>
         <pose>0 0 0 0 -0 0</pose>
         <geometry>
           <box>
             <size>0.03 0.03 0.001</size>
           </box>
         </geometry>
-      </visual>
-
-      <gravity>1</gravity>
+      </visual> -->
+      <!-- <gravity>1</gravity>
       <velocity_decay/>
       <self_collide>0</self_collide>
-    </link>
+    </link> -->
 
 
     <joint name='rotor_0_joint' type='revolute'>
@@ -755,6 +1031,16 @@
       <parent>base_link</parent>
     </joint>
 
+    <joint name='d435i_camera_joint' type='fixed'>
+      <pose relative_to='operator_1_Link'>-0.1084 0.001842 0.21154 0 -0.5236 -0.016991</pose>
+      <child>d435i_camera::base_link</child>
+      <parent>operator_1_Link</parent>
+    </joint>
+    <include>
+      <uri>model://d435i_camera</uri>
+      <pose relative_to='d435i_camera_joint'>0 0 0 0 -0 0</pose>
+    </include>
+
     <!-- <include>
       <uri>model://depth_camera</uri>
       <pose>0.1 0 0 0 0 0</pose>
@@ -917,15 +1203,10 @@
       <qgc_udp_port>14550</qgc_udp_port>
       <sdk_addr>INADDR_ANY</sdk_addr>
       <sdk_udp_port>14540</sdk_udp_port>
-
       <hil_mode>0</hil_mode>
-
       <hil_state_level>false</hil_state_level>
-
       <enable_lockstep>0</enable_lockstep>
-
       <use_tcp>true</use_tcp>
-
       <motorSpeedCommandPubTopic>/gazebo/command/motor_speed</motorSpeedCommandPubTopic>
       <control_channels>
         <channel name="rotor0">
@@ -1029,11 +1310,35 @@
       <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
       <accelerometerTurnOnBiasSigma>0.196</accelerometerTurnOnBiasSigma>
     </plugin>
-    <!-- <plugin name="position_controller" filename="libposition_controller.so">
-      <jointname>operator_1_joint</jointname>
-      <p_gain>1</p_gain>
-      <i_gain>0.5</i_gain>
-      <d_gain>0.5</d_gain>
-    </plugin> -->
+
+    <plugin name="position_controller" filename="libposition_controller.so">
+      <joint_name>operator_1_joint</joint_name>
+
+      <!-- parameter for lighter weight -->
+      <!-- <p_gain>15</p_gain> -->
+      <!-- <i_gain>0.1</i_gain> -->
+      <!-- <d_gain>0.1</d_gain> -->
+
+      <!-- parameter for heavier weight -->
+      <p_gain>15</p_gain>
+      <i_gain>1</i_gain>
+      <d_gain>5</d_gain>
+    </plugin>
+
+    <plugin name='joint_state_publisher' filename='libgazebo_ros_joint_state_publisher.so'>
+      <robotNamespace>/</robotNamespace>
+      <jointName>
+        operator_1_joint, rotor_0_joint, rotor_1_joint, rotor_2_joint, rotor_3_joint, rotor_4_joint, rotor_5_joint,
+        connect_joint, wheel1_joint, wheel2_joint, wheel3_joint
+      </jointName>
+      <updateRate>50.0</updateRate>
+    </plugin>
+
+    <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+      <updateRate>100.0</updateRate>
+      <topicName>ft_sensor_topic</topicName>
+      <!-- <jointName>force_sensor_joint</jointName> -->
+      <jointName>connect_joint</jointName>
+    </plugin>
   </model>
 </sdf>
