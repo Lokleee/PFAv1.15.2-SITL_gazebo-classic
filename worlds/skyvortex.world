@@ -13,13 +13,13 @@
       <uri>model://asphalt_plane</uri>
     </include> -->
     <include>
-      <uri>model://WindTURBINE</uri>
+      <uri>model://wind_turbine</uri>
     </include>
     <!-- <include>
       <uri>model://tube</uri>
     </include> -->
     <include>
-      <uri>model://Piperack-1</uri>
+      <uri>model://piperack-1</uri>
     </include>
     <include>
       <uri>model://bridge_v1</uri>

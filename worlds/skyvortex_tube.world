@@ -16,7 +16,7 @@
       <uri>model://tube</uri>
     </include> -->
     <include>
-      <uri>model://Piperack-1</uri>
+      <uri>model://piperack-1</uri>
     </include>
     <physics name='default_physics' default='0' type='ode'>
       <gravity>0 0 -9.8066</gravity>

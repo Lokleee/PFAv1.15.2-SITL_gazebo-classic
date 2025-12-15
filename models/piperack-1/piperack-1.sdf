@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <sdf version='1.7'>
-  <model name='Piperack-1'>
+  <model name='piperack-1'>
     <static>true</static>
     <pose>5 30 0 0 0 0</pose>
     <link name='base_link'>
@@ -21,7 +21,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://Piperack-1/meshes/base_link.STL</uri>
+            <uri>model://piperack-1/meshes/base_link.STL</uri>
           </mesh>
         </geometry>
       </collision>
@@ -30,7 +30,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://Piperack-1/meshes/base_link.STL</uri>
+            <uri>model://piperack-1/meshes/base_link.STL</uri>
           </mesh>
         </geometry>
         <material>

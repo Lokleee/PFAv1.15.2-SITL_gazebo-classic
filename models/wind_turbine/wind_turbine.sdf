@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <sdf version='1.7'>
-  <model name='WindTURBINE'>
+  <model name='wind_turbine'>
     <pose>10 10 0 0 0 0</pose>
     <link name='base_link'>
       <inertial>
@@ -20,7 +20,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://WindTURBINE/meshes/base_link.STL</uri>
+            <uri>model://wind_turbine/meshes/base_link.STL</uri>
           </mesh>
         </geometry>
       </collision>
@@ -29,7 +29,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://WindTURBINE/meshes/base_link.STL</uri>
+            <uri>model://wind_turbine/meshes/base_link.STL</uri>
           </mesh>
         </geometry>
         <material>
@@ -75,7 +75,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://WindTURBINE/meshes/roter.STL</uri>
+            <uri>model://wind_turbine/meshes/roter.STL</uri>
           </mesh>
         </geometry>
       </collision>
@@ -84,7 +84,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://WindTURBINE/meshes/roter.STL</uri>
+            <uri>model://wind_turbine/meshes/roter.STL</uri>
           </mesh>
         </geometry>
         <material>
